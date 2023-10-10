@@ -1,0 +1,26 @@
+.App{
+  color:black;
+
+}
+.main{
+  background-color:red;
+}
+.division{
+    float:left;
+    background-color: lightgrey;
+}
+.icon {
+    vertical-align: middle;
+    line-height: 1px;
+    font-size: 50px;
+    align-content: center;
+    padding:40px;
+    color:black;
+  }
+  .tag{
+    font-size: 20px;
+    font:bold;
+    text-decoration: none;
+    color:black;
+    cursor:pointer;
+  }
