@@ -1,0 +1,16 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background-color:transparent;
+    text-align: left;
+    flex-direction: column;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+input[type="submit"]{
+    cursor: pointer;
+}

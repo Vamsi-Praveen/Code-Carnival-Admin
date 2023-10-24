@@ -14,7 +14,13 @@ const Add = () => {
     runneroll: "",
     runnerbranch: '',
     'r-image': "",
-    yearweek: ""
+    yearweek: "",
+    date: '',
+    cordinator: '',
+    participants: '',
+    location: "",
+    report: '',
+    dept_conducted: ''
   });
   const getUrl = async (image) => {
     try {
@@ -90,9 +96,16 @@ const Add = () => {
         roll: data.runneroll,
         image: data['r-image']
       },
-      _id: data.yearweek
+      _id: data.yearweek,
+      dept_conducted: data.dept_conducted,
+      date: data.date,
+      coordinator: data.cordinator,
+      participants: data.participants,
+      location: data.location,
+      report: data.report,
     }
     if (new_data.winner.image && new_data.runner.image) {
+      // console.log(new_data);
       await axios.post("http://localhost:8000/coding/insert", new_data)
         .then((res) => {
           alert("Successs");
@@ -110,8 +123,13 @@ const Add = () => {
           <p style={{ fontSize: '40px', color: "black", fontWeight: "bold" }} align="center">Coding</p>
           <form onSubmit={handleSubmit}>
             <table align="center">
+              <tr><th>Dept. Conducted:</th><td><input type='text' name="dept_conducted" onChange={handleChange}></input></td></tr>
+              <tr><th>Date:</th><td><input type='date' name="date" onChange={handleChange}></input></td></tr>
+              <tr><th>Name of the Cordinator:</th><td><input type='text' name="cordinator" onChange={handleChange}></input></td></tr>
+              <tr><th>No of Participants:</th><td><input type='text' name="participants" onChange={handleChange}></input></td></tr>
+              <tr><th>Location and Venue:</th><td><input type='text' name="location" onChange={handleChange}></input></td></tr>
+              <tr><th>Report:</th><td><textarea name='report' onChange={handleChange}></textarea></td></tr>
               <tr><th colspan="2" align="center">Upload Winner Details</th></tr>
-
               <tr><th>YearMonthWeek(yyyymmw)</th><td><input type="text" name="yearweek" onChange={handleChange} /></td></tr>
               <tr><th>WinnerName: </th><td><input type="text" name="winnername" onChange={handleChange} /></td></tr>
               <tr><th>WinnerRollNo:</th> <td><input type="text" name="winneroll" onChange={handleChange} /></td></tr>

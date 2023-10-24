@@ -7,6 +7,8 @@ import Add from './coding_add';
 import Insert from './gallery_add';
 import Ann from './announce_add';
 import './CSS/home.css'
+import Users from './users';
+import Questions from './questions';
 function Home() {
     return (
     <main className='main-container'>
@@ -18,6 +20,8 @@ function Home() {
           <Route path="/coding/coding_add" element={<Add />} />
           <Route path="/gallery/gallery_add" element={<Insert />} />
           <Route path="/announcements/announce_add" element={<Ann />} />
+          <Route path="/users/" element={<Users />} />
+          <Route path="/questions/" element={<Questions />} />
         </Routes>
     </main>
   )

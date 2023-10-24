@@ -6,7 +6,7 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
         <div className='sidebar-title'>
             <div className='sidebar-brand'>
-                 ADITYA EDUCATIONAL INSTITUTIONS
+                 ADITYA ENGINNERING COLLEGE
             </div>
             <span className='icon close_icon' onClick={OpenSidebar}>X</span>
         </div>
@@ -28,6 +28,18 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
                 <li className='sidebar-list-item'>
                     <icon.BsGrid1X2Fill style={{color:"black"}}/>
                     <Link to="announcements">&nbsp; ANNOUNCEMENTS</Link>
+                </li>
+            </Link>
+            <Link to="users" style={{textDecoration:"none",color:"#fff"}}>
+                <li className='sidebar-list-item'>
+                    <icon.BsPersonCircle style={{color:"black"}}/>
+                    <Link to="users">&nbsp; USERS</Link>
+                </li>
+            </Link>
+            <Link to="questions" style={{textDecoration:"none",color:"#fff"}}>
+                <li className='sidebar-list-item'>
+                    <icon.BsQuestionCircle style={{color:"black"}}/>
+                    <Link to="questions">&nbsp; ADD QUESTIONS</Link>
                 </li>
             </Link>
             

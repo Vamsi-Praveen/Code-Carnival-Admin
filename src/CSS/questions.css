@@ -1,0 +1,25 @@
+.main{
+    align-items: center;
+    color:black;
+    background-color:transparent;
+    text-align: left;
+}
+input{
+    margin:7px;
+    padding:5px 10px;
+    color:black;
+    outline: none;
+    border:none;
+}
+input[type="date"]{
+    width:150px;
+}
+th{
+    color:black;
+}
+.main textarea
+{
+    width: 300px;
+    height: 150px;
+    outline: none;
+}
