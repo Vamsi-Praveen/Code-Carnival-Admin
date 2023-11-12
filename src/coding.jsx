@@ -33,10 +33,10 @@ class Division1 extends Component {
   class Division3 extends Component {
     render() {
       return (
-        <Link to="coding_remove" className="tag">
+        <Link to="update" className="tag">
           <div className="division" style={{color:"black",width:"225px",height:"225px",boxShadow:"4px 4px 16px rgba(0,0,0,0.3)"}}>
-            <center><ic.BsFillXSquareFill className="icon" style={{textDecoration:"none"}} /><br></br>
-            <Link to="remove" className="tag">REMOVE</Link>
+            <center><ic.BsFillEyeFill className="icon" style={{textDecoration:"none"}} /><br></br>
+            <Link to="update" className="tag">Update</Link>
             </center>
           </div>
         </Link>
@@ -52,7 +52,7 @@ class Division1 extends Component {
           <p style={{fontSize:'40px',color:"black"}} align="center">Coding</p>
           {/* <Division1 /> */}
           <Division2 />
-          {/* <Division3 /> */}
+          <Division3 />
         </div>
       );
     }

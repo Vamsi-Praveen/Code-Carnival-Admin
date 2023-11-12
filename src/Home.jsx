@@ -9,6 +9,9 @@ import Ann from './announce_add';
 import './CSS/home.css'
 import Users from './users';
 import Questions from './questions';
+import EventDates from './event_dates';
+import Upcoming from './upcoming';
+import Update from './coding_update';
 function Home() {
     return (
     <main className='main-container'>
@@ -22,6 +25,9 @@ function Home() {
           <Route path="/announcements/announce_add" element={<Ann />} />
           <Route path="/users/" element={<Users />} />
           <Route path="/questions/" element={<Questions />} />
+          <Route path="/eventdates" element={<EventDates />} />
+          <Route path="/upcoming" element={<Upcoming />} />
+          <Route path="/coding/update/" element={<Update />}/>
         </Routes>
     </main>
   )

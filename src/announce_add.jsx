@@ -22,7 +22,7 @@ const Ann = () => {
         <p style={{ fontSize: '40px', color: "black" }} align="center">Announcements</p>
         <form onSubmit={handleSubmit}>
           <table align="center">
-            <tr><th>Description</th><td><textarea onChange={(e) => { setData(e.target.value) }} /></td></tr>
+            <tr><th>Description</th><td><textarea required onChange={(e) => { setData(e.target.value) }} /></td></tr>
             <tr><td colspan="2" align="center"><input type="submit" /></td></tr>
           </table>
 

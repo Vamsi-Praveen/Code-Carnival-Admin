@@ -6,9 +6,9 @@ import axios from "axios";
 const Questions = () => {
     const [data, setData] = useState({
         _id: '',
-        description: '',
-        marks: '',
-        round: ''
+        round: '',
+        name: '',
+        link: ''
     })
     const handleChange = (e) => {
         const name = e.target.name;
@@ -18,32 +18,53 @@ const Questions = () => {
         })
 
     }
+    const format_date = (oldDate) => {
+        var p = oldDate.split(/\D/g)
+        return [p[2], p[1], p[0]].join("-")
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const new_data = {
-            _id: data._id,
             questions: [
                 {
-                    description: data.description,
-                    marks: data.marks,
-                    round: data.round
+                    round: data.round,
+                    name: data.name,
+                    link: data.link
                 }
             ]
         }
-        await axios.post('http://localhost:8000/questions/addquestions', new_data)
+        console.log(new_data)
+        await axios.put(`http://localhost:8000/coding/updatequestions/${format_date(data._id)}`, new_data)
             .then((data) => {
                 alert("Question Added Succesfully")
                 setData({
                     _id: '',
-                    description: '',
-                    marks: '',
-                    round: ''
+                    round: '',
+                    name: '',
+                    link: ''
                 })
 
             })
             .catch((err) => {
-                alert("Failed Error Occured")
-                console.log(err)
+                if (err.response.status == 404) {
+                    alert("No data Found")
+                    setData({
+                        _id: '',
+                        round: '',
+                        name: '',
+                        link: ''
+                    })
+                }
+                else {
+
+                    alert("Failed Error Occured")
+                    setData({
+                        _id: '',
+                        round: '',
+                        name: '',
+                        link: ''
+                    })
+                }
             })
 
     }
@@ -54,10 +75,10 @@ const Questions = () => {
                     <p style={{ fontSize: '40px', color: "black", fontWeight: "bold" }} align="center">Add Questions</p>
                     <form onSubmit={handleSubmit}>
                         <table align="center">
-                            <tr><th>Date of Event:</th><td><input type='date' name="_id" value={data._id} onChange={handleChange}></input></td></tr>
-                            <tr><th>Question Description:</th><td><textarea name='description' value={data.description} onChange={handleChange}></textarea></td></tr>
-                            <tr><th>Round:</th><td><input type="text" name="round" value={data.round} onChange={handleChange} /></td></tr>
-                            <tr><th>Marks:</th><td><input type="text" name="marks" value={data.marks} onChange={handleChange} /></td></tr>
+                            <tr><th>Date of Event:</th><td><input type='date' required name="_id" value={data._id} onChange={handleChange}></input></td></tr>
+                            <tr><th>Question Title:</th><td><textarea name='name' required value={data.name} onChange={handleChange}></textarea></td></tr>
+                            <tr><th>Round:</th><td><input type="text" name="round" required value={data.round} onChange={handleChange} /></td></tr>
+                            <tr><th>Link:</th><td><input type="text" name="link" required value={data.link} onChange={handleChange} /></td></tr>
                             <tr><td colspan="2" align="right"><input type="submit" /></td></tr>
 
                         </table>

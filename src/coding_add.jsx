@@ -14,13 +14,13 @@ const Add = () => {
     runneroll: "",
     runnerbranch: '',
     'r-image': "",
-    yearweek: "",
     date: '',
     cordinator: '',
     participants: '',
     location: "",
     report: '',
-    dept_conducted: ''
+    dept_conducted: '',
+    'coordinator_image':""
   });
   const getUrl = async (image) => {
     try {
@@ -35,9 +35,13 @@ const Add = () => {
         img.append("file", image);
         img.append("cloud_name", "dwfgxy6dy");
         img.append("upload_preset", "uocagty5");
+    
         await axios.post(`https://api.cloudinary.com/v1_1/dwfgxy6dy/image/upload`, img)
           .then((res) => {
             setWimage(res.data.url)
+          })
+          .catch((err)=>{
+            console.log(err)
           })
       }
     } catch (error) {
@@ -79,42 +83,55 @@ const Add = () => {
       return { ...prev, [name]: value };
     })
   }
+  const format_date = (oldDate) => {
+    var p = oldDate.split(/\D/g)
+    return [p[2], p[1], p[0]].join("-")
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     data['w-image'] = imagewinner
     data['r-image'] = imagerunner
     const new_data = {
       winner: {
-        name: data.winnername,
-        dept: data.winnerbranch,
-        roll: data.winneroll,
-        image: data['w-image']
+        name: data.winnername || ' ',
+        dept: data.winnerbranch || ' ',
+        roll: data.winneroll || ' ',
+        image: data['w-image'] || ' '
       },
       runner: {
-        name: data.runnername,
-        dept: data.runnerbranch,
-        roll: data.runneroll,
-        image: data['r-image']
+        name: data.runnername || ' ',
+        dept: data.runnerbranch || ' ',
+        roll: data.runneroll || ' ',
+        image: data['r-image'] || ' '
       },
-      _id: data.yearweek,
+      _id: format_date(data.date),
       dept_conducted: data.dept_conducted,
-      date: data.date,
+      date: format_date(data.date),
       coordinator: data.cordinator,
-      participants: data.participants,
+      participants: data.participants || ' ',
       location: data.location,
-      report: data.report,
+      report: data.report || ' ',
+      completed: false,
+      coordinator_image: data.coordinator_image || " ",
+      questions:[]
     }
-    if (new_data.winner.image && new_data.runner.image) {
-      // console.log(new_data);
-      await axios.post("http://localhost:8000/coding/insert", new_data)
-        .then((res) => {
-          alert("Successs");
-        })
-        .catch((err) => {
-          alert("Failed");
-        })
-    }
+    console.log(new_data)
+    await axios.post("http://localhost:8000/coding/insert", new_data)
+      .then((res) => {
+        alert("Successs");
+        window.location.reload()
+      })
+      .catch((err) => {
+        if (err.response.status == 501) {
+          alert("Already exists")
+          window.location.reload()
+        }
+        else {
 
+          alert("Failed");
+          window.location.reload()
+        }
+      })
   }
   return (
     <div >
@@ -123,26 +140,36 @@ const Add = () => {
           <p style={{ fontSize: '40px', color: "black", fontWeight: "bold" }} align="center">Coding</p>
           <form onSubmit={handleSubmit}>
             <table align="center">
-              <tr><th>Dept. Conducted:</th><td><input type='text' name="dept_conducted" onChange={handleChange}></input></td></tr>
-              <tr><th>Date:</th><td><input type='date' name="date" onChange={handleChange}></input></td></tr>
-              <tr><th>Name of the Cordinator:</th><td><input type='text' name="cordinator" onChange={handleChange}></input></td></tr>
-              <tr><th>No of Participants:</th><td><input type='text' name="participants" onChange={handleChange}></input></td></tr>
-              <tr><th>Location and Venue:</th><td><input type='text' name="location" onChange={handleChange}></input></td></tr>
-              <tr><th>Report:</th><td><textarea name='report' onChange={handleChange}></textarea></td></tr>
-              <tr><th colspan="2" align="center">Upload Winner Details</th></tr>
-              <tr><th>YearMonthWeek(yyyymmw)</th><td><input type="text" name="yearweek" onChange={handleChange} /></td></tr>
-              <tr><th>WinnerName: </th><td><input type="text" name="winnername" onChange={handleChange} /></td></tr>
-              <tr><th>WinnerRollNo:</th> <td><input type="text" name="winneroll" onChange={handleChange} /></td></tr>
-              <tr><th>WinnerBranch:</th> <td><input type="text" name="winnerbranch" onChange={handleChange} /></td></tr>
-              <tr><th>AddWinnerImage</th><td><input type="file" name="w-image" onChange={handleChange} /></td></tr>
+              <tr><th>Dept. Conducted:</th><td>
 
-              <tr><th colspan="2" align="center">Upload Runner details </th></tr>
+                <select name='dept_conducted' onChange={handleChange}>
+                  <option value={"null"}>SELECT DEPARTMENT</option>
+                  <option>CSE</option>
+                  <option>IT</option>
+                  <option>AIML</option>
+                </select>
+
+
+              </td></tr>
+              <tr><th>Date:</th><td><input type='date' name="date" required onChange={handleChange}></input></td></tr>
+              <tr><th>Name of the Cordinator:</th><td><input type='text' required name="cordinator" onChange={handleChange}></input></td></tr>
+              {/* <tr><th>No of Participants:</th><td><input type='text'  name="participants" onChange={handleChange}></input></td></tr> */}
+              <tr><th>Location and Venue:</th><td><input type='text' name="location" onChange={handleChange}></input></td></tr>
+              {/* <tr><th>Report:</th><td><textarea name='report'  onChange={handleChange}></textarea></td></tr> */}
+              {/* <tr><th colspan="2" align="center">Upload Winner Details</th></tr> */}
+              {/* <tr><th>YearMonthWeek(yyyymmw)</th><td><input type="text" name="yearweek" onChange={handleChange} /></td></tr> */}
+              {/* <tr><th>WinnerName: </th><td><input type="text"  name="winnername" onChange={handleChange} /></td></tr> */}
+              {/* <tr><th>WinnerRollNo:</th> <td><input type="text"  name="winneroll" onChange={handleChange} /></td></tr> */}
+              {/* <tr><th>WinnerBranch:</th> <td><input type="text"  name="winnerbranch" onChange={handleChange} /></td></tr> */}
+              <tr><th>Add Organiser Image</th><td><input type="file"  name="coordinator_image" onChange={handleChange} /></td></tr>
+
+              {/* <tr><th colspan="2" align="center">Upload Runner details </th></tr> */}
 
               {/* <tr><th>Date</th><td><input type="date" /></td></tr> */}
-              <tr><th>RunnerName:</th> <td><input type="text" name="runnername" onChange={handleChange} /></td></tr>
-              <tr><th>RunnerRollNo:</th> <td><input type="text" name="runneroll" onChange={handleChange} /></td></tr>
-              <th>RunnerBranch: </th><td><input type="text" name="runnerbranch" onChange={handleChange} /></td>
-              <tr><th>AddRunnerImage</th><td><input type="file" name="r-image" onChange={handleChange} /></td></tr>
+              {/* <tr><th>RunnerName:</th> <td><input type="text"  name="runnername" onChange={handleChange} /></td></tr> */}
+              {/* <tr><th>RunnerRollNo:</th> <td><input type="text"  name="runneroll" onChange={handleChange} /></td></tr> */}
+              {/* <th>RunnerBranch: </th><td><input type="text"  name="runnerbranch" onChange={handleChange} /></td> */}
+              {/* <tr><th>AddRunnerImage</th><td><input type="file"  name="r-image" onChange={handleChange} /></td></tr> */}
               <tr><td colspan="2" align="right"><input type="submit" /></td></tr>
 
             </table>
