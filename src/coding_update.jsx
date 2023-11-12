@@ -29,7 +29,7 @@ const Update = () => {
           image.type === "image.jpeg"
         )
       ) {
-        alert("in")
+
         const img = new FormData();
         img.append("file", image);
         img.append("cloud_name", "dwfgxy6dy");
@@ -170,6 +170,8 @@ const Update = () => {
                 </select>
                 
                 </td></tr>
+              <tr><p style={{color:"red"}}>Please upload the images in PNG format</p></tr>
+
               <tr><th>AddWinnerImage</th><td><input type="file" name="w-image" onChange={handleChange} /></td></tr>
 
               <tr><th colspan="2" align="center">Upload Runner details </th></tr>
@@ -191,6 +193,8 @@ const Update = () => {
                   <option>CIVIL</option>
                 </select>
               </td>
+              <tr><p style={{color:"red"}}>Please upload the images in PNG format</p></tr>
+
               <tr><th>AddRunnerImage</th><td><input type="file" name="r-image" onChange={handleChange} /></td></tr>
               <tr><td colspan="2" align="right"><input type="submit" /></td></tr>
 

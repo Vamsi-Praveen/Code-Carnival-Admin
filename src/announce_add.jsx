@@ -10,6 +10,7 @@ const Ann = () => {
     axios.post('http://localhost:8000/announcements/add',{"description":data})
     .then((data)=>{
       alert("Added Succesfully");
+      window.location.reload()
     })
     .catch((err)=>{
       console.log(err);

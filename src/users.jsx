@@ -4,16 +4,20 @@ import axios from 'axios';
 
 const Users = () => {
     const [data, setData] = useState(null);
+    const format_date = (oldDate) => {
+        var p = oldDate.split(/\D/g)
+        return [p[2], p[1], p[0]].join("-")
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.get(`http://localhost:8000/user/downloadexcel/data/${data}`)
+        axios.get(`http://localhost:8000/user/downloadexcel/data/${format_date(data)}`)
             .then((result) => {
-                if (result.data.length == 0) {
+                if (result.data.length == 0) { 
                     alert("No Data Found")
 
                 }
                 else {
-                    window.location.href = `http://localhost:8000/user/downloadexcel/${data}`;
+                    window.location.href = `http://localhost:8000/user/downloadexcel/${format_date(data)}`;
                 }
             })
 

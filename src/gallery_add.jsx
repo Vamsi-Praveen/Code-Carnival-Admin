@@ -48,6 +48,8 @@ const Insert = () => {
         <form onSubmit={handleSubmit}>
           <table align="center">
             {/* <tr><th>Date</th><td><input type="date" /></td></tr> */}
+            <tr><p style={{color:"red"}}>Please upload the images in PNG format</p></tr>
+
             <tr><th>AddImage</th><td><input type="file" accept='image/*' name='image' onChange={handleChange} /></td></tr>
             <tr><td align="center"><input type="submit" /></td></tr>
           </table>

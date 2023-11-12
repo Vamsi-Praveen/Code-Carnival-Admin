@@ -5,6 +5,7 @@ import axios from "axios"
 const Add = () => {
   const [imagewinner, setWimage] = useState()
   const [imagerunner, setRImage] = useState()
+  const [staff, setStaff] = useState()
   const [data, setData] = useState({
     winnername: '',
     winneroll: "",
@@ -20,7 +21,8 @@ const Add = () => {
     location: "",
     report: '',
     dept_conducted: '',
-    'coordinator_image':""
+    'coordinator_image': "",
+    qualification:''
   });
   const getUrl = async (image) => {
     try {
@@ -35,12 +37,12 @@ const Add = () => {
         img.append("file", image);
         img.append("cloud_name", "dwfgxy6dy");
         img.append("upload_preset", "uocagty5");
-    
+
         await axios.post(`https://api.cloudinary.com/v1_1/dwfgxy6dy/image/upload`, img)
           .then((res) => {
             setWimage(res.data.url)
           })
-          .catch((err)=>{
+          .catch((err) => {
             console.log(err)
           })
       }
@@ -70,6 +72,29 @@ const Add = () => {
       console.log(error)
     }
   }
+  const getCoordinator = async (image) => {
+    try {
+      if (
+        image && (
+          image.type === "image/png" ||
+          image.type === "image/jpg" ||
+          image.type === "image.jpeg"
+        )
+      ) {
+        const img = new FormData();
+        img.append("file", image);
+        img.append("cloud_name", "dwfgxy6dy");
+        img.append("upload_preset", "gsl6t3si");
+        await axios.post(`https://api.cloudinary.com/v1_1/dwfgxy6dy/image/upload`, img)
+          .then((res) => {
+            setStaff(res.data.url)
+            alert("Staff Image Uploaded Succesfully")
+          })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const handleChange = async (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -78,6 +103,10 @@ const Add = () => {
     }
     if (name === 'r-image') {
       getUrl1(e.target.files[0]);
+    }
+    if(name==='coordinator_image')
+    {
+      getCoordinator(e.target.files[0])
     }
     setData((prev) => {
       return { ...prev, [name]: value };
@@ -91,6 +120,7 @@ const Add = () => {
     e.preventDefault();
     data['w-image'] = imagewinner
     data['r-image'] = imagerunner
+    data['coordinator_image'] = staff
     const new_data = {
       winner: {
         name: data.winnername || ' ',
@@ -113,7 +143,8 @@ const Add = () => {
       report: data.report || ' ',
       completed: false,
       coordinator_image: data.coordinator_image || " ",
-      questions:[]
+      questions: [],
+      qualification:data.qualification
     }
     console.log(new_data)
     await axios.post("http://localhost:8000/coding/insert", new_data)
@@ -153,6 +184,18 @@ const Add = () => {
               </td></tr>
               <tr><th>Date:</th><td><input type='date' name="date" required onChange={handleChange}></input></td></tr>
               <tr><th>Name of the Cordinator:</th><td><input type='text' required name="cordinator" onChange={handleChange}></input></td></tr>
+              <tr><th>Dept. Conducted:</th><td>
+
+                <select name='qualification' onChange={handleChange}>
+                  <option value={"null"}>SELECT Qualification</option>
+                  <option>Assistant Professor</option>
+                  <option>Sr.Assistant Professor</option>
+                  <option>Associate Professor</option>
+                  <option>Professor</option>
+                </select>
+
+
+              </td></tr>
               {/* <tr><th>No of Participants:</th><td><input type='text'  name="participants" onChange={handleChange}></input></td></tr> */}
               <tr><th>Location and Venue:</th><td><input type='text' name="location" onChange={handleChange}></input></td></tr>
               {/* <tr><th>Report:</th><td><textarea name='report'  onChange={handleChange}></textarea></td></tr> */}
@@ -161,7 +204,8 @@ const Add = () => {
               {/* <tr><th>WinnerName: </th><td><input type="text"  name="winnername" onChange={handleChange} /></td></tr> */}
               {/* <tr><th>WinnerRollNo:</th> <td><input type="text"  name="winneroll" onChange={handleChange} /></td></tr> */}
               {/* <tr><th>WinnerBranch:</th> <td><input type="text"  name="winnerbranch" onChange={handleChange} /></td></tr> */}
-              <tr><th>Add Organiser Image</th><td><input type="file"  name="coordinator_image" onChange={handleChange} /></td></tr>
+              <tr><p style={{color:"red"}}>Please upload the images in PNG format</p></tr>
+              <tr><th>Add Organiser Image</th><td><input type="file" name="coordinator_image" onChange={handleChange} /></td></tr>
 
               {/* <tr><th colspan="2" align="center">Upload Runner details </th></tr> */}
 
