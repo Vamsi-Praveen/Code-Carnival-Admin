@@ -86,6 +86,11 @@ const Update = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!data.runnerbranch || !data.winnerbranch)
+    {
+      alert("all feilds are required")
+      return
+    }
     data['w-image'] = imagewinner
     data['r-image'] = imagerunner
     const new_data = {
@@ -107,25 +112,24 @@ const Update = () => {
       report: data.report,
       completed: true
     }
-    console.log(new_data)
     if (new_data.winner.image && new_data.runner.image) {
-      // console.log(new_data);
+
+      console.log(new_data)
       await axios.put(`http://localhost:8000/coding/update/${new_data.date}`, new_data)
         .then((res) => {
           alert("Successs");
           window.location.reload()
         })
         .catch((err) => {
-          if(err.response.status==404)
-          {
+          if (err.response.status == 404) {
             alert(err.response.data)
-          // window.location.reload()
-
+            window.location.reload()
           }
-          else{
+          else {
             alert("Failed");
           }
         })
+
     }
 
   }
@@ -147,16 +151,16 @@ const Update = () => {
 
               </td></tr> */}
               {/* <tr><th>Name of the Cordinator:</th><td><input type='text' required name="cordinator" onChange={handleChange}></input></td></tr> */}
-              <tr><th>No of Participants:</th><td><input type='text' name="participants" onChange={handleChange}></input></td></tr>
+              <tr><th>No of Participants:</th><td><input type='text' required name="participants" onChange={handleChange}></input></td></tr>
               {/* <tr><th>Location and Venue:</th><td><input type='text' name="location" onChange={handleChange}></input></td></tr> */}
-              <tr><th>Report:</th><td><textarea name='report' onChange={handleChange}></textarea></td></tr>
+              <tr><th>Report:</th><td><textarea name='report' required onChange={handleChange}></textarea></td></tr>
               <tr><th colspan="2" align="center">Upload Winner Details</th></tr>
               {/* <tr><th>YearMonthWeek(yyyymmw)</th><td><input type="text" name="yearweek" onChange={handleChange} /></td></tr> */}
-              <tr><th>WinnerName: </th><td><input type="text" name="winnername" onChange={handleChange} /></td></tr>
-              <tr><th>WinnerRollNo:</th> <td><input type="text" name="winneroll" onChange={handleChange} /></td></tr>
+              <tr><th>WinnerName: </th><td><input required type="text" name="winnername" onChange={handleChange} /></td></tr>
+              <tr><th>WinnerRollNo:</th> <td><input required type="text" name="winneroll" onChange={handleChange} /></td></tr>
               <tr><th>WinnerBranch:</th> <td>
-                
-              <select name='winnerbranch' onChange={handleChange}>
+
+                <select name='winnerbranch' required onChange={handleChange}>
                   <option value={"null"}>SELECT DEPARTMENT</option>
                   <option>CSE</option>
                   <option>IT</option>
@@ -168,19 +172,19 @@ const Update = () => {
                   <option>AGRI</option>
                   <option>CIVIL</option>
                 </select>
-                
-                </td></tr>
-              <tr><p style={{color:"red"}}>Please upload the images in PNG format</p></tr>
 
-              <tr><th>AddWinnerImage</th><td><input type="file" name="w-image" onChange={handleChange} /></td></tr>
+              </td></tr>
+              <tr><p style={{ color: "red" }}>Please upload the images in PNG format</p></tr>
+
+              <tr><th>AddWinnerImage</th><td><input type="file" name="w-image" required onChange={handleChange} /></td></tr>
 
               <tr><th colspan="2" align="center">Upload Runner details </th></tr>
 
               {/* <tr><th>Date</th><td><input type="date" /></td></tr> */}
-              <tr><th>RunnerName:</th> <td><input type="text" name="runnername" onChange={handleChange} /></td></tr>
-              <tr><th>RunnerRollNo:</th> <td><input type="text" name="runneroll" onChange={handleChange} /></td></tr>
+              <tr><th>RunnerName:</th> <td><input type="text" name="runnername" required onChange={handleChange} /></td></tr>
+              <tr><th>RunnerRollNo:</th> <td><input type="text" name="runneroll" required onChange={handleChange} /></td></tr>
               <th>RunnerBranch: </th><td>
-              <select name='runnerbranch' onChange={handleChange}>
+                <select name='runnerbranch' required onChange={handleChange}>
                   <option value={"null"}>SELECT DEPARTMENT</option>
                   <option>CSE</option>
                   <option>IT</option>
@@ -193,9 +197,9 @@ const Update = () => {
                   <option>CIVIL</option>
                 </select>
               </td>
-              <tr><p style={{color:"red"}}>Please upload the images in PNG format</p></tr>
+              <tr><p style={{ color: "red" }}>Please upload the images in PNG format</p></tr>
 
-              <tr><th>AddRunnerImage</th><td><input type="file" name="r-image" onChange={handleChange} /></td></tr>
+              <tr><th>AddRunnerImage</th><td><input type="file" name="r-image" required onChange={handleChange} /></td></tr>
               <tr><td colspan="2" align="right"><input type="submit" /></td></tr>
 
             </table>
