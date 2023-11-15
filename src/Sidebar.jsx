@@ -27,7 +27,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
                 <Link to="coding" style={{ textDecoration: "none", color: "#fff" }}>
                     <li className='sidebar-list-item'>
                         <icon.BsLaptop style={{ color: "black" }} />
-                        <Link to="coding">&nbsp; CODING</Link>
+                        <Link to="coding">&nbsp; CONTESTS</Link>
                     </li>
                 </Link>
                 <Link to="gallery" style={{ textDecoration: "none", color: "#fff" }}>
